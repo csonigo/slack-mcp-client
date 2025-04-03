@@ -14,24 +14,28 @@
     "build"
   ],
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.7.0",
+    "@modelcontextprotocol/sdk": "file:../typescript-sdk",
     "@slack/bolt": "^4.2.1",
-    "@slack/web-api": "^7.9.0",
+    "@slack/web-api": "^7.9.1",
+    "content-type": "^1.0.5",
     "dotenv": "^16.4.7",
-    "openai": "^4.89.0",
+    "eventsource": "^3.0.6",
+    "openai": "^4.91.1",
     "pino": "^9.6.0",
+    "raw-body": "^3.0.0",
     "stable-hash": "^0.0.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.22.0",
-    "@types/node": "^22.13.10",
-    "eslint": "^9.22.0",
+    "@eslint/js": "^9.23.0",
+    "@types/content-type": "^1.1.8",
+    "@types/node": "^22.13.17",
+    "eslint": "^9.23.0",
     "globals": "^16.0.0",
     "pino-pretty": "^13.0.0",
     "tsx": "^4.19.3",
-    "typescript": "^5.6.3",
-    "typescript-eslint": "^8.27.0"
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.29.0"
   },
   "type": "module"
 }

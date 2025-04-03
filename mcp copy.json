@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "data_gouv": {
+      "url": "http://localhost:3001/sse"
+    },
+    "linkedin-mcp": {
+      "url": "https://mcp.ivee.so"
+    },
+    "time": {
+      "command": "python",
+      "args": ["-m", "mcp_server_time", "--local-timezone=Europe/Paris"]
+    }
+  }
+}
