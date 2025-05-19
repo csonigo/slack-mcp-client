@@ -4,10 +4,9 @@ import { z } from "zod";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import type { Transport } from "@modelcontextprotocol/sdk/shared/transport.js";
 import { UnauthorizedError, type OAuthClientProvider } from "@modelcontextprotocol/sdk/client/auth.js";
-
-import { HttpClientTransport } from "./HttpTransport.js";
 
 import { Tool } from "./Tool.js";
 import { SlackOAuthClientProvider } from "./SlackOauthClientProvider.js";
@@ -60,7 +59,7 @@ export const McpToolsArray = z.array(McpTool);
 
 export class McpClient {
     private _config: McpClientConfig;
-    private _transport: SSEClientTransport | StdioClientTransport | HttpClientTransport | null;
+    private _transport: SSEClientTransport | StdioClientTransport | StreamableHTTPClientTransport | null;
     private _client: Client;
     private _connected: boolean = false;
     private _userId: string;
@@ -144,7 +143,7 @@ export class McpClient {
                 this._transport = new SSEClientTransport(new URL(this._config.url));
             } else if ("url" in this._config) {
                 await this.setupAuthProvider();
-                this._transport = new HttpClientTransport(new URL(this._config.url), {
+                this._transport = new StreamableHTTPClientTransport(new URL(this._config.url), {
                     authProvider: this._authProvider!,
                 });
             } else if ("command" in this._config) {

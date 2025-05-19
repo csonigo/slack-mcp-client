@@ -14,7 +14,7 @@
     "build"
   ],
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.9.0",
+    "@modelcontextprotocol/sdk": "1.11.4",
     "@slack/bolt": "^4.2.1",
     "@slack/web-api": "^7.9.1",
     "@types/express": "^5.0.1",
