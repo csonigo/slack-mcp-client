@@ -291,12 +291,20 @@ You are a friendly slack assistant that can help answer questions and help with 
         const toolRequestList = (messageBlocks[1] as RichTextBlock).elements[0]!
             .elements as unknown as RichTextSection[];
         const toolRequests = toolRequestList.map((element) => {
-            const toolMessage = element.elements[0]! as RichTextText;
-            const toolName = toolMessage.text.split(" with arguments:\n")[0];
-            const toolArgs = JSON.parse(toolMessage.text.split(" with arguments:\n")[1] || "{}") as Record<
-                string,
-                unknown
-            >;
+            // Concatenate all text elements, mainly because slacks breaks down emojis in different elements
+            const fullText = element.elements
+                .map((e) => {
+                    if (e.type === "text") {
+                        return e.text;
+                    } else if (e.type === "emoji") {
+                        return e.unicode ? Bot._unicodeToEmoji(e.unicode) : "";
+                    }
+                    return "";
+                })
+                .join("");
+
+            const toolName = fullText.split(" with arguments:\n")[0];
+            const toolArgs = JSON.parse(fullText.split(" with arguments:\n")[1] || "{}") as Record<string, unknown>;
             if (!toolName || !toolArgs) {
                 throw new Error("Tool name or args not found");
             }
@@ -308,6 +316,11 @@ You are a friendly slack assistant that can help answer questions and help with 
             };
         });
         return toolRequests;
+    }
+
+    private static _unicodeToEmoji(unicode: string): string {
+        const codePoint = parseInt(unicode, 16);
+        return String.fromCodePoint(codePoint);
     }
 }
 export default Bot;
